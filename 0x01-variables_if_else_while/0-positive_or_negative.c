@@ -2,9 +2,9 @@
 #include <time.h>
 #include <stdio.h>
 /**
-*main -entry point
-*Description : check positive or negative
-*Return :Always 0 (sucess)
+*main - Entry point
+*
+*Return:Always0(success)
 */
 int main(void)
 {
@@ -19,4 +19,4 @@ else
 printf("%i is negative\n", n);
 return (0);
 
-} 
+}
