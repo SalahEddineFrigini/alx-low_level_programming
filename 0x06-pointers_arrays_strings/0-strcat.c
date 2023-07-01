@@ -7,18 +7,20 @@
  */
 char *_strcat(char *dest, char *src)
 {
-	int i, j;
+	int lengthD, lengthS;
 
-	i =0;
-	while (dest[i]!= '\0')
-		i++;
-	 j =0;
-	 while (src[j]!= '\0'){
-		 dest[i] = src[j];
-		 i++;
-		 j++;
-		 }
-	 dest[i] = '\0';
+	lengthD = 0;
+	lengthS = 0;
 
+	while (*(dest + lengthD) != '\0')
+		lengthD++;
+
+	while (*(src + lengthS) != '\0' && lengthD < 97)
+	{
+		*(dest + lengthD) = *(src + lengthS);
+		lengthD++;
+		lengthS++;
+	}
+	*(dest + lengthD) = '\0';
 	return (dest);
 }
