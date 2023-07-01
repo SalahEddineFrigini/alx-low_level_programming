@@ -7,43 +7,41 @@
  */
 void print_buffer(char *b, int size)
 {
-	int i, counter = 0, size2 = size;
-	char *ptr = b;
+	int i, j;
 
-	if (size == 0)
-		printf("\n");
-	while (size > 0)
+	i = 0;
+	if (size <= 0)
+		putchar('\n');
+	else
 	{
-		printf("%08x:", counter);
-		i = 0;
-		while (size > 0 && i < 10)
+		while (i < size)
 		{
-			if (!(i % 2))
-				printf(" ");
-			printf("%02x", *ptr++);
-			i++;
-			size--;
-			counter++;
+			printf("%08x: ", i);
+			j = 0;
+			while (j < 10)
+			{
+				if (j % 2 == 0 && j > 0)
+					printf(" ");
+				if (j + i > size - 1)
+					printf("  ");
+				else
+					printf("%.2x", b[j + i]);
+				j++;
+			}
+			putchar(' ');
+			j = 0;
+			while (j < 10)
+			{
+				if (j + i > size - 1)
+					break;
+				if (b[j + i] >= ' ' && b[j + i] <= '~')
+					putchar(b[j + i]);
+				else
+					putchar('.');
+				j++;
+			}
+			putchar('\n');
+			i += 10;
 		}
-		while (counter % 10 != 0)
-		{
-			if (!(counter % 2))
-				printf(" ");
-			printf("  ");
-			counter++;
-		}
-		printf(" ");
-		i = 0;
-		while (size2 > 0 && i < 10)
-		{
-			if (*b > 31 && *b != 127)
-				printf("%c", *b);
-			else
-				printf(".");
-			size2--;
-			i++;
-			b++;
-		}
-		printf("\n");
 	}
 }
