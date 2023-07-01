@@ -10,50 +10,77 @@
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int a_len = 0, b_len = 0, carry = 0, a, b, sum, biggest;
-	
-	while (n1[a_len] != '\0')
-		a_len++;
-	while (n2[b_len] != '\0')
-		b_len++;
-	if (a_len > b_len)
-		biggest = a_len;
-	else
-		biggest = b_len;
-	if ((biggest + 1) >= size_r)
-		return (0);
-	r[biggest + 1] = '\0';
-	
-	while (biggest >= 0)
+	int carry = 0, index = 0, index2;
+	char *s1 = n1, *s2 = n2;
+
+	while (*s1 != 0)
+		s1++;
+	while (*s2 != 0)
+		s2++;
+	size_r--;
+	r[size_r] = 0;
+	s1--;
+	s2--;
+	while (s2 != n2 - 1 && s1 != n1 - 1)
 	{
-		a = (n1[a_len - 1] - '0');
-		b = (n1[b_len - 1] - '0');
-		if (a_len > 0 && b_len > 0)
-			sum = a + b + carry;
-		else if (a_len < 0 && b_len > 0)
-			sum = b + carry;
-		else if (a_len > 0 && b_len < 0)
-			sum = a + carry;
-		else
-			sum = carry;
-		
-		if (sum > 9)
+		r[index] = *s2 - '0' + *s1 + carry;
+		carry = 0;
+		if (r[index] > '9')
 		{
-			carry = sum / 10;
-			sum = (sum % 10) + '0';
+			carry++;
+			r[index] -= 10;
 		}
-		else
-		{
-			carry = 0;
-			sum = sum + '0';
-		}
-		r[biggest] = sum;
-		a_len--;
-		b_len--;
-		biggest--;
+		index++;
+		s2--;
+		s1--;
+		if (size_r == index && (s1 != n1 - 1 || s2 != n2 - 1 || carry == 1))
+			return (0);
 	}
-	if (*(r) != 0)
-		return (r);
+	while (s1 != n1 - 1)
+	{
+		r[index] = *s1 + carry;
+		carry = 0;
+		if (r[index] > '9')
+		{
+			carry = 1;
+			r[index] -= 10;
+		}
+		s1--;
+		index++;
+		if (size_r == index && (s1 != n1 - 1 ||  carry == 1))
+			return (0);
+	}
+	while (s2 != n2 - 1)
+	{
+		r[index] = *s2 + carry;
+		carry = 0;
+		if (r[index] > '9')
+		{
+			carry = 1;
+			r[index] -= 10;
+		}
+		s2--;
+		index++;
+		if (size_r == index && (s2 != n2 - 1 || carry == 1))
+			return (0);
+	}
+	if (carry == 1)
+	{
+		r[index] = '1';
+		r[index + 1] = 0;
+	}
 	else
-		return (r + 1);
+	{
+		r[index--] = 0;
+	}
+	index2 = 0;
+	while (index2 <= index)
+	{
+		carry = r[index];
+		r[index] = r[index2];
+		r[index2] = carry;
+		index--;
+		index2++;
+	}
+	return (r);
 }
