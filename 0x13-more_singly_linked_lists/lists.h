@@ -14,8 +14,8 @@
  */
 typedef struct listint_s
 {
-	int n;
-	struct listint_s *next;
+        int n;
+        struct listint_s *next;
 } tt;
 int pop_listint(tt **head);
 listint_t *get_nodeint_at_index(tt *head, unsigned int index);
@@ -34,4 +34,3 @@ size_t free_listint_safe(tt **h);
 listint_t *find_listint_loop(tt *head);
 
 #endif
-
